@@ -201,7 +201,7 @@ class ncdisp:
             temp=mapkwargsface.pop('colors')
           else:
             mapkwargsface=mapkwargs
-          im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargsface)
+          im=m.contourf(dispx,dispy,mapvar,levs,antialiased=True,**mapkwargsface)
         if edg=='y':
           if 'colors' in mapkwargs and 'cmap' in mapkwargs:
             mapkwargsedg=copy.copy(mapkwargs)
@@ -232,7 +232,7 @@ class ncdisp:
             temp=mapkwargsface.pop('colors')
           else:
             mapkwargsface=mapkwargs
-          im=m.contourf(X,Y,mapvar,levs,**mapkwargsface)
+          im=m.contourf(X,Y,mapvar,levs,antialiased=True,**mapkwargsface)
         if edg=='y':
           if 'colors' in mapkwargs and 'cmap' in mapkwargs:
             mapkwargsedg=copy.copy(mapkwargs)
