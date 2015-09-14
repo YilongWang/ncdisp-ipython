@@ -98,7 +98,7 @@ class ncload(ncdisp):
     """
     return self.nc.variables[vname]
 
-  def get(self,vnames):
+  def get(self,*vnames):
     """
     Choose a variable or a list of variales.
     
@@ -111,11 +111,9 @@ class ncload(ncdisp):
     -------
     varlist: netCDF4.Variable objects
     """
-    varlist=[]
-    if isinstance(vnames,str):vnames=[vnames]
-    for vname in vnames:varlist.append(self._getvar(vname))
+    varlist=[self._getvar(vname) for vname in vnames]
     self._refvar=varlist[0]
-    return varlist[0] if len(varlist)==1 else varlist
+    return varlist[0] if len(vnames)==1 else varlist
   
   def _arrangedims(self):
     """
