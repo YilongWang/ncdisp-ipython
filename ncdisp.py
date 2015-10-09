@@ -74,7 +74,7 @@ class ncdisp:
     if loc:
       locdims=[loc[i*2] for i in range(len(loc)/2)]
       locposs=[loc[i*2+1] for i in range(len(loc)/2)]
-      index=[range(k) for k in var.shape]
+      index=[slice(0,k) for k in var.shape]
       if isinstance(var,netCDF4.Variable):ref=var
       elif ref==None:ref=self._refvar
       for d in locdims:index[ref.dimensions.index(dimkeys[d.upper()])]=locposs[locdims.index(d)]
@@ -353,7 +353,7 @@ class ncdisp:
             else:
               end,start=len(dims[d.upper()])-np.searchsorted(dims[d.upper()][::-1],locposs[locdims.index(d)])
               if d.upper()!='I' and d.upper()!='J':invert='y'
-          oneindex=range(np.max([0,start-1]),np.min([len(dims[dim.upper()]),end+1]))
+          oneindex=slice(np.max([0,start-1]),np.min([len(dims[dim.upper()]),end+1]))
           index[ref.dimensions.index(dimkeys[d.upper()])]=oneindex
           axis=dims[d.upper()][index]
         else:
@@ -476,7 +476,7 @@ class ncdisp:
     if loc:
       locdims=[loc[i*2] for i in range(len(loc)/2)]
       locposs=[loc[i*2+1] for i in range(len(loc)/2)]
-      index=[range(k) for k in v.shape]
+      index=[slice(0,k) for k in v.shape]
       if isinstance(u,netCDF4.Variable):ref=u
       elif isinstance(v,netCDF4.Variable):ref=v
       elif ref==None:ref=self._refvar
