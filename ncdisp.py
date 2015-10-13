@@ -108,7 +108,7 @@ class ncdisp:
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
       coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
+      coordy=coordy[(coordy>=-180.)*(coordy<180.)]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
@@ -119,17 +119,25 @@ class ncdisp:
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
       coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
+      coordx=coordx[(coordx>=-180.)*(coordx<180.)]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
 
-    crnryy=(coordy[:-1]+coordy[1:])/2.
-    crnryy=np.insert(crnryy,0,np.nanmax([latmin,coordy[0]-(coordy[1]-coordy[0])/2.]))
-    crnryy=np.append(crnryy,np.nanmin([latmax,coordy[-1]+(coordy[-1]-coordy[-2])/2.]))
-    crnrxx=(coordx[:-1]+coordx[1:])/2.
-    crnrxx=np.insert(crnrxx,0,np.nanmax([lonmin,coordx[0]-(coordx[1]-coordx[0])/2.]))
-    crnrxx=np.append(crnrxx,np.nanmin([lonmax,coordx[-1]+(coordx[-1]-coordx[-2])/2.]))
+    if p in ['nplaea','ortho']:
+      crnryy=(coordy[:-1]+coordy[1:])/2.
+      crnryy=np.insert(crnryy,0,coordy[0]-(coordy[1]-coordy[0])/2.)
+      crnryy=np.append(crnryy,coordy[-1]+(coordy[-1]-coordy[-2])/2.)
+      crnrxx=(coordx[:-1]+coordx[1:])/2.
+      crnrxx=np.insert(crnrxx,0,coordx[0]-(coordx[1]-coordx[0])/2.)
+      crnrxx=np.append(crnrxx,coordx[-1]+(coordx[-1]-coordx[-2])/2.)
+    else:
+      crnryy=(coordy[:-1]+coordy[1:])/2.
+      crnryy=np.insert(crnryy,0,np.nanmax([latmin,coordy[0]-(coordy[1]-coordy[0])/2.]))
+      crnryy=np.append(crnryy,np.nanmin([latmax,coordy[-1]+(coordy[-1]-coordy[-2])/2.]))
+      crnrxx=(coordx[:-1]+coordx[1:])/2.
+      crnrxx=np.insert(crnrxx,0,np.nanmax([lonmin,coordx[0]-(coordx[1]-coordx[0])/2.]))
+      crnrxx=np.append(crnrxx,np.nanmin([lonmax,coordx[-1]+(coordx[-1]-coordx[-2])/2.]))
   
     if y.isupper():
       if y1==None:y1=0
@@ -503,7 +511,7 @@ class ncdisp:
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
       coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
+      coordy=coordy[(coordy>=-180.)*(coordy<180.)]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
@@ -514,17 +522,25 @@ class ncdisp:
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
       coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
+      coordx=coordx[(coordx>=-180.)*(coordx<180.)]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
 
-    crnryy=(coordy[:-1]+coordy[1:])/2.
-    crnryy=np.insert(crnryy,0,np.nanmax([latmin,coordy[0]-(coordy[1]-coordy[0])/2.]))
-    crnryy=np.append(crnryy,np.nanmin([latmax,coordy[-1]+(coordy[-1]-coordy[-2])/2.]))
-    crnrxx=(coordx[:-1]+coordx[1:])/2.
-    crnrxx=np.insert(crnrxx,0,np.nanmax([lonmin,coordx[0]-(coordx[1]-coordx[0])/2.]))
-    crnrxx=np.append(crnrxx,np.nanmin([lonmax,coordx[-1]+(coordx[-1]-coordx[-2])/2.]))
+    if p in ['nplaea','ortho']:
+      crnryy=(coordy[:-1]+coordy[1:])/2.
+      crnryy=np.insert(crnryy,0,coordy[0]-(coordy[1]-coordy[0])/2.)
+      crnryy=np.append(crnryy,coordy[-1]+(coordy[-1]-coordy[-2])/2.)
+      crnrxx=(coordx[:-1]+coordx[1:])/2.
+      crnrxx=np.insert(crnrxx,0,coordx[0]-(coordx[1]-coordx[0])/2.)
+      crnrxx=np.append(crnrxx,coordx[-1]+(coordx[-1]-coordx[-2])/2.)
+    else:
+      crnryy=(coordy[:-1]+coordy[1:])/2.
+      crnryy=np.insert(crnryy,0,np.nanmax([latmin,coordy[0]-(coordy[1]-coordy[0])/2.]))
+      crnryy=np.append(crnryy,np.nanmin([latmax,coordy[-1]+(coordy[-1]-coordy[-2])/2.]))
+      crnrxx=(coordx[:-1]+coordx[1:])/2.
+      crnrxx=np.insert(crnrxx,0,np.nanmax([lonmin,coordx[0]-(coordx[1]-coordx[0])/2.]))
+      crnrxx=np.append(crnrxx,np.nanmin([lonmax,coordx[-1]+(coordx[-1]-coordx[-2])/2.]))
   
     if y.isupper():
       if y1==None:y1=0
