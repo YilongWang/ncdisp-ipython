@@ -228,7 +228,7 @@ class ncdisp:
             temp=mapkwargsedg.pop('cmap')
           else:
             mapkwargsedg=mapkwargs
-          im=m.contour(dispx,dixpy,mapvar,**mapkwargsedg)
+          im=m.contour(dispx,dispy,mapvar,**mapkwargsedg)
     else:          # if not p
       if intp=='n':
         im=m.pcolormesh(crnrxx[px[0]:px[-1]+2],crnryy[py[0]:py[-1]+2],mapvar,**mapkwargs)
