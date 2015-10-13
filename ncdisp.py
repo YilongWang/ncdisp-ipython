@@ -182,30 +182,10 @@ class ncdisp:
     if p:
       if intp=='n':
         X,Y=np.meshgrid(crnrxx[px[0]:px[-1]+2],crnryy[py[0]:py[-1]+2])
-        if 'lon' in dimkeys[x.upper()]:
-          if 2*coordx[-1]-coordx[-2]-360.==coordx[0]:
-            mapvar=np.ma.hstack((mapvar,mapvar[:,0:1]))
-            X=np.hstack((X,X[:,0:1]+360.))
-            Y=np.hstack((Y,Y[:,0:1]))
-        if 'lon' in dimkeys[y.upper()]:
-          if 2*coordy[-1]-coordy[-2]-360.==coordy[0]:
-            mapvar=np.ma.vstack((mapvar,mapvar[0:1,:]))
-            X=np.hstack((X,X[0:1,:]))
-            Y=np.vstack((Y,Y[0:1,:]+360.))
         dispx,dispy=m(X,Y)
         im=m.pcolormesh(dispx,dispy,mapvar,**mapkwargs)
       else:
         X,Y=np.meshgrid(coordx[px[0]:px[-1]+1],coordy[py[0]:py[-1]+1])
-        if 'lon' in dimkeys[x.upper()]:
-          if 2*coordx[-1]-coordx[-2]-360.==coordx[0]:
-            mapvar=np.ma.hstack((mapvar,mapvar[:,0:1]))
-            X=np.hstack((X,X[:,0:1]+360.))
-            Y=np.hstack((Y,Y[:,0:1]))
-        if 'lon' in dimkeys[y.upper()]:
-          if 2*coordy[-1]-coordy[-2]-360.==coordy[0]:
-            mapvar=np.ma.vstack((mapvar,mapvar[0:1,:]))
-            X=np.hstack((X,X[0:1,:]))
-            Y=np.vstack((Y,Y[0:1,:]+360.))
         dispx,dispy=m(X,Y)
         if 'ticks' in cbkwargs:cmin=cbkwargs['ticks'][0];cmax=cbkwargs['ticks'][-1]
         else:
