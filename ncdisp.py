@@ -262,8 +262,15 @@ class ncdisp:
           im=m.contour(X,Y,mapvar,**mapkwargsedg)
   
     if cbar=='y':
-      cb=plt.colorbar(im,**cbkwargs)
-      if 'ticklabels' in cbkwargs:cb.set_ticklabels(cbkwargs['ticklabels'])
+      cbkwargs_tmp={}
+      for key in cbkwargs:
+        if key!='ticklabels':cbkwargs_tmp[key]=cbkwargs[key]
+      cb=plt.colorbar(im,**cbkwargs_tmp)
+      if 'ticklabels' in cbkwargs:
+        if 'orientation' in cbkwargs and cbkwargs['orientation']=='horizontal':
+          cb.ax.set_xticklabels(cbkwargs['ticklabels'])
+        else:
+          cb.ax.set_yticklabels(cbkwargs['ticklabels'])
     else:cb=0
     
     return ax,m,im,cb
