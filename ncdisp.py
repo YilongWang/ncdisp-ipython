@@ -108,7 +108,7 @@ class ncdisp:
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
       coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<180.)]
+      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
@@ -119,7 +119,7 @@ class ncdisp:
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
       coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<180.)]
+      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
@@ -511,7 +511,7 @@ class ncdisp:
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
       coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<180.)]
+      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
@@ -522,7 +522,7 @@ class ncdisp:
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
       coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<180.)]
+      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
