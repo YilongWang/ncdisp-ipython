@@ -141,7 +141,7 @@ class ncdisp:
   
     if y.isupper():
       if y1==None:y1=0
-      if y2==None:y2=len(coordy)-1
+      if y2==None:y2=len(dims[y.upper()])-1
       py=[y1,y2]
     else:
       if y1==None:y1=coordy[0]
@@ -149,7 +149,7 @@ class ncdisp:
       py=np.searchsorted(crnryy,[y1,y2])-1
     if x.isupper():
       if x1==None:x1=0
-      if x2==None:x2=len(coordx)-1
+      if x2==None:x2=len(dims[x.upper()])-1
       px=[x1,x2]
     else:
       if x1==None:x1=coordx[0]
@@ -544,7 +544,7 @@ class ncdisp:
   
     if y.isupper():
       if y1==None:y1=0
-      if y2==None:y2=len(coordy)-1
+      if y2==None:y2=len(dims[y.upper()])-1
       py=[y1,y2]
     else:
       if y1==None:y1=coordy[0]
@@ -552,7 +552,7 @@ class ncdisp:
       py=np.searchsorted(crnryy,[y1,y2])-1
     if x.isupper():
       if x1==None:x1=0
-      if x2==None:x2=len(coordx)-1
+      if x2==None:x2=len(dims[x.upper()])-1
       px=[x1,x2]
     else:
       if x1==None:x1=coordx[0]
