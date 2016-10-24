@@ -439,7 +439,7 @@ class ncdisp:
     **kwargs : 
            Dict with up to four inferior dict (optional) are available:
               'bm' : **bmkwargs, passed on to mpl_toolkits.basemap.Basemap
-              'q' : **caxkwargs, passed on to mpl_toolkits.basemap.quiver
+              'q'  : **caxkwargs, passed on to mpl_toolkits.basemap.quiver
               'qk' : **mapkwargs, passed on to matplotlib.pyplot.quiverkey
 
     Returns  
