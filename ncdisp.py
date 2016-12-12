@@ -368,7 +368,9 @@ class ncdisp:
         for dim in ref.dimensions:
           for key in dimkeys.keys():
             if dim==dimkeys[key]:break
-          if key not in locdims and v.shape[ref.dimensions.index(dim)]!=1:axis=dims[key][:];break
+          if (key not in locdims and v.shape[ref.dimensions.index(dim)]!=1) and\
+             (key.lower() not in locdims and v.shape[ref.dimensions.index(dim)]!=1):
+            axis=dims[key][:];break
           else:continue
     
       value=v[tuple(index)]
