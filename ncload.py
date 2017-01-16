@@ -128,18 +128,23 @@ class ncload(ncdisp):
     dims={}
     dimkeys={}
     ncdimkeys=nc.dimensions.keys()
-    if 'longitude' in ncdimkeys:
-      lonindex=ncdimkeys.index('longitude')
-      ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
-    if ('longitude' not in ncdimkeys) and ('lon' in ncdimkeys):
-      lonindex=ncdimkeys.index('lon')
-      ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
-    if 'latitude' in ncdimkeys:
-      latindex=ncdimkeys.index('latitude')
-      ncdimkeys.insert(0,ncdimkeys.pop(latindex))
-    if ('latitude' not in ncdimkeys) and ('lat' in ncdimkeys):
-      latindex=ncdimkeys.index('lat')
-      ncdimkeys.insert(0,ncdimkeys.pop(latindex))
+    for key in ncdimkeys:
+      if 'longitude' in key:
+        lonindex=ncdimkeys.index(key)
+        ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
+        continue
+      if ('longitude' not in key) and ('lon' in key):
+        lonindex=ncdimkeys.index(key)
+        ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
+        continue
+      if 'latitude' in key:
+        latindex=ncdimkeys.index(key)
+        ncdimkeys.insert(0,ncdimkeys.pop(latindex))
+        continue
+      if ('latitude' not in key) and ('lat' in key):
+        latindex=ncdimkeys.index(key)
+        ncdimkeys.insert(0,ncdimkeys.pop(latindex))
+        continue
     for i,key in enumerate(ncdimkeys):
       if key in nc.variables.keys():
         dims[chr(73+i)]=nc.variables[key][:] 
