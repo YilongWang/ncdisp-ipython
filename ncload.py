@@ -132,19 +132,20 @@ class ncload(ncdisp):
       if 'longitude' in key:
         lonindex=ncdimkeys.index(key)
         ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
-        continue
+        break
       if ('longitude' not in key) and ('lon' in key):
         lonindex=ncdimkeys.index(key)
         ncdimkeys.insert(0,ncdimkeys.pop(lonindex))
-        continue
+        break
+    for key in ncdimkeys:
       if 'latitude' in key:
         latindex=ncdimkeys.index(key)
         ncdimkeys.insert(0,ncdimkeys.pop(latindex))
-        continue
+        break
       if ('latitude' not in key) and ('lat' in key):
         latindex=ncdimkeys.index(key)
         ncdimkeys.insert(0,ncdimkeys.pop(latindex))
-        continue
+        break
     for i,key in enumerate(ncdimkeys):
       if key in nc.variables.keys():
         dims[chr(73+i)]=nc.variables[key][:] 
