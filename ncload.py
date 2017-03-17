@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from PythonTools import *
-import netCDF4
+import numpy as np
+from netCDF4 import Dataset
 
 class ncload(ncdisp):
   def __init__(self,fname):
