@@ -1,9 +1,10 @@
 #!/usr/bin/env python
-from PythonTools import *
+import numpy as np
+from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import inspect
 import matplotlib.ticker as ticker 
-import netCDF4
+from netCDF4 import Dataset
 
 class ncdisp:      
   def map(self,var,y1=None,y2=None,x1=None,x2=None,y='I',x='J',loc=[],\
