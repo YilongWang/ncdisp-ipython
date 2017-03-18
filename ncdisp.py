@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import numpy as np
+import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import inspect
@@ -54,7 +55,7 @@ class ncdisp:
     Example:
     nc=ncload('sample')
     v=nc.get('samplevar')
-    ax,m,im,cb=nc.map(v,loc=['K',1,'O',1],p='nplaea',intp='y',**{'bm':{'boundinglat':20},'map':{'cmap':plt.get_cmap('bwr')},'cb':{'boundaries':range(5)}})
+    ax,m,im,cb=nc.map(v,loc=['K',1,'O',1],p='nplaea',intp='y',bm={'boundinglat':20},map={'cmap':plt.get_cmap('bwr')},cb={'boundaries':range(5)}})
     """
     nc=self.nc
     dims=self.dims
@@ -106,22 +107,30 @@ class ncdisp:
       latmin=np.max([-90.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([90.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
     elif 'lon' in dimkeys[y.upper()].lower():
+      coordy=np.hstack((coordy-360.,coordy,coordy+360.))
+      coordymask=(coordy>=-180.)*(coordy<=180.)
+      coordy=coordy[coordymask]
+      coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
+      var=np.vstack((var,var,var))
+      var=var[coordymask,:]
+      var=var[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None,:]
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
-      coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
-      coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
     if 'lat' in dimkeys[x.upper()].lower():
       lonmin=np.max([-90.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([90.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
     elif 'lon' in dimkeys[x.upper()].lower():
+      coordx=np.hstack((coordx-360.,coordx,coordx+360.))
+      coordxmask=(coordx>=-180.)*(coordx<=180.)
+      coordx=coordx[coordxmask]
+      coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
+      var=np.hstack((var,var,var))
+      var=var[:,coordxmask]
+      var=var[:,(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
-      coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
-      coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
 
@@ -177,13 +186,13 @@ class ncdisp:
         else:
           m=Basemap(projection=p,**bmkwargs)
   
-        m.drawcoastlines()
+  #      m.drawcoastlines()
   #      ax.axis('off')
         if p in ['nplaea','ortho']:
-          m.drawparallels(np.arange(-80,81.,40.))
+          m.drawparallels(np.arange(-80.,81.,40.))
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[1,1,1,1])
         else:
-          m.drawparallels(np.arange(-80,81.,40.),labels=[1,0,0,0])
+          m.drawparallels(np.arange(-80.,81.,40.),labels=[1,0,0,0])
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,0,1])
       else:
         m=ax
@@ -266,7 +275,7 @@ class ncdisp:
     
     return ax,m,im,cb
   
-  def _defaultbmargs(lat_0=90,lon_0=0,boundinglat=0):
+  def _defaultbmargs(lat_0=90,lon_0=0,boundinglat=1):
     pass
 
   def _defaultmapargs(zorder=0):
@@ -311,9 +320,8 @@ class ncdisp:
     nc=ncload('sample')
     v1,v2=nc.get(['samplevar1','samplevar2'])
     v3=v1[:]+v2[:]
-    nc.line([v1,v2,v3],['I',12,'J',5],'y',ref=[v1,v2,v1],plotargs=['ro','b-','y'],**{'ln':{'lw':3},'plot':[{},{},{'maker':'^'}]'leg':{'loc':1}})
+    nc.line([v1,v2,v3],['I',12,'J',5],'y',ref=[v1,v2,v1],plotargs=['ro','b-','y'],ln={'lw':3},plot=[{},{},{'maker':'^'}],leg={'loc':1})
     """
-    import pylab
     nc=self.nc
     dims=self.dims
     dimkeys=self.dimkeys
@@ -455,7 +463,7 @@ class ncdisp:
     Example:
     nc=ncload('sample')
     u,v=nc.get(['uwind','vwind'])
-    ax,m,Q,qk=nc.vec(u,v,['K',1],p='nplaea',**{'bm':{'boundinglat':20},'q':{'color':'r'},'qk':{'Y':-0.1}})
+    ax,m,Q,qk=nc.vec(u,v,['K',1],p='nplaea',bm={'boundinglat':20},q={'color':'r'},qk={'Y':-0.1}})
     """
     nc=self.nc
     dims=self.dims
@@ -471,8 +479,8 @@ class ncdisp:
       if bmkey not in bmkwargs:bmkwargs[bmkey]=dic[bmkey]
     dic=dict(zip(qkspec[0],qkspec[-1]))
     for qkkey in dic.keys():
-      if qkkey not in qkkwargs:qkkwargs[qkkey]=dic[qkkey]  
-   
+      if qkkey not in qkkwargs:qkkwargs[qkkey]=dic[qkkey]
+
     if loc:
       locdims=[loc[i*2] for i in range(len(loc)/2)]
       locposs=[loc[i*2+1] for i in range(len(loc)/2)]
@@ -511,22 +519,30 @@ class ncdisp:
       latmin=np.max([-90.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([90.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
     elif 'lon' in dimkeys[y.upper()].lower():
+      coordy=np.hstack((coordy-360.,coordy,coordy+360.))
+      coordymask=(coordy>=-180.)*(coordy<=180.)
+      coordy=coordy[coordymask]
+      coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
+      var=np.vstack((var,var,var))
+      var=var[coordymask,:]
+      var=var[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None,:]
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
       latmax=np.min([180.,coordy[-1]+(coordy[-1]-coordy[-2])/2.])
-      coordy=np.hstack((coordy-360.,coordy,coordy+360.))
-      coordy=coordy[(coordy>=-180.)*(coordy<=180.)]
-      coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
     else:
       latmin=latmax=np.nan
     if 'lat' in dimkeys[x.upper()].lower():
       lonmin=np.max([-90.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([90.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
     elif 'lon' in dimkeys[x.upper()].lower():
+      coordx=np.hstack((coordx-360.,coordx,coordx+360.))
+      coordxmask=(coordx>=-180.)*(coordx<=180.)
+      coordx=coordx[coordxmask]
+      coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
+      var=np.hstack((var,var,var))
+      var=var[:,coordxmask]
+      var=var[:,(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
       lonmax=np.min([180.,coordx[-1]+(coordx[-1]-coordx[-2])/2.])
-      coordx=np.hstack((coordx-360.,coordx,coordx+360.))
-      coordx=coordx[(coordx>=-180.)*(coordx<=180.)]
-      coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
     else:
       lonmin=lonmax=np.nan
 
@@ -547,7 +563,7 @@ class ncdisp:
   
     if y.isupper():
       if y1==None:y1=0
-      if y2==None:y2=len(dims[y.upper()])-1
+      if y2==None:y2=len(coordy)-1
       py=[y1,y2]
     else:
       if y1==None:y1=coordy[0]
@@ -555,7 +571,7 @@ class ncdisp:
       py=np.searchsorted(crnryy,[y1,y2])-1
     if x.isupper():
       if x1==None:x1=0
-      if x2==None:x2=len(dims[x.upper()])-1
+      if x2==None:x2=len(coordx)-1
       px=[x1,x2]
     else:
       if x1==None:x1=coordx[0]
@@ -580,10 +596,10 @@ class ncdisp:
           m=Basemap(projection=p,**bmkwargs)
   
         if p in ['nplaea','ortho']:
-          m.drawparallels(np.arange(-80,81.,40.))
+          m.drawparallels(np.arange(-80.,81.,40.))
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[1,1,1,1])
         else:
-          m.drawparallels(np.arange(-80,81.,40.),labels=[1,0,0,0])
+          m.drawparallels(np.arange(-80.,81.,40.),labels=[1,0,0,0])
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,1,0])
       else:
         m=ax
@@ -599,7 +615,8 @@ class ncdisp:
     if key=='y':
       length=int(np.nanmax(np.sqrt(v**2+u**2)))
       if 'U' not in qkkwargs.keys():qkkwargs['U']=length
-      if 'label' not in qkkwargs.keys():qkkwargs['label']=str(length)+('units' in ref.ncattrs() and ref.units) or ''
+      if 'label' not in qkkwargs.keys():
+        qkkwargs['label']=str(length)+' '+(('units' in ref.ncattrs() and ref.units) or '')
       qk = plt.quiverkey(Q,**qkkwargs)
       return ax,m,Q,qk 
     else: return ax,m,Q
