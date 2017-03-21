@@ -216,20 +216,16 @@ class ncdisp:
         locator.create_dummy_axis()
         locator.set_bounds(cmin, cmax) 
         levs = locator()
-        if face=='y':
-          if 'colors' in mapkwargs:
-            mapkwargsface=copy.copy(mapkwargs)
-            temp=mapkwargsface.pop('colors')
-          else:
-            mapkwargsface=mapkwargs
-          im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargsface)
+        if face=='y':   
+          if 'colorsf' in mapkwargs:
+            im=m.contourf(dispx,dispy,mapvar,levs,colors=mapkwargs['colorsf'],**mapkwargs)
+          else:      
+            im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargs)
         if edg=='y':
-          if 'colors' in mapkwargs and 'cmap' in mapkwargs:
-            mapkwargsedg=copy.copy(mapkwargs)
-            temp=mapkwargsedg.pop('cmap')
+          if 'colorsl' in mapkwargs and 'cmap' in mapkwargs:
+            im=m.contour(dispx,dispy,mapvar,colors=mapkwargs['colorsl'],**mapkwargs)
           else:
-            mapkwargsedg=mapkwargs
-          im=m.contour(dispx,dispy,mapvar,**mapkwargsedg)
+            im=m.contour(dispx,dispy,mapvar,**mapkwargs)
     else:          # if not p
       if intp=='n':
         im=m.pcolormesh(crnrxx[px[0]:px[-1]+2],crnryy[py[0]:py[-1]+2],mapvar,**mapkwargs)
@@ -247,20 +243,16 @@ class ncdisp:
         locator.create_dummy_axis()
         locator.set_bounds(cmin, cmax) 
         levs = locator()
-        if face=='y':
-          if 'colors' in mapkwargs:
-            mapkwargsface=copy.copy(mapkwargs)
-            temp=mapkwargsface.pop('colors')
-          else:
-            mapkwargsface=mapkwargs
-          im=m.contourf(X,Y,mapvar,levs,**mapkwargsface)
+        if face=='y':   
+          if 'colorsf' in mapkwargs:
+            im=m.contourf(dispx,dispy,mapvar,levs,colors=mapkwargs['colorsf'],**mapkwargs)
+          else:      
+            im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargs)
         if edg=='y':
-          if 'colors' in mapkwargs and 'cmap' in mapkwargs:
-            mapkwargsedg=copy.copy(mapkwargs)
-            temp=mapkwargsedg.pop('cmap')
+          if 'colorsl' in mapkwargs and 'cmap' in mapkwargs:
+            im=m.contour(dispx,dispy,mapvar,colors=mapkwargs['colorsl'],**mapkwargs)
           else:
-            mapkwargsedg=mapkwargs
-          im=m.contour(X,Y,mapvar,**mapkwargsedg)
+            im=m.contour(dispx,dispy,mapvar,**mapkwargs)
   
     if cbar=='y':
       cbkwargs_tmp={}
