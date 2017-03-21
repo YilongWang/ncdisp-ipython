@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import numpy as np
+import copy
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 from mpl_toolkits.axes_grid1 import make_axes_locatable
