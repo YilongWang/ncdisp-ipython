@@ -112,7 +112,7 @@ class ncdisp:
       coordymask=(coordy>=-180.)*(coordy<=180.)
       coordy=coordy[coordymask]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
-      var=np.vstack((var,var,var))
+      var=np.ma.vstack((var,var,var))
       var=var[coordymask,:]
       var=var[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None,:]
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
@@ -127,7 +127,7 @@ class ncdisp:
       coordxmask=(coordx>=-180.)*(coordx<=180.)
       coordx=coordx[coordxmask]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
-      var=np.hstack((var,var,var))
+      var=np.ma.hstack((var,var,var))
       var=var[:,coordxmask]
       var=var[:,(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
@@ -516,7 +516,7 @@ class ncdisp:
       coordymask=(coordy>=-180.)*(coordy<=180.)
       coordy=coordy[coordymask]
       coordy=coordy[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None]
-      var=np.vstack((var,var,var))
+      var=np.ma.vstack((var,var,var))
       var=var[coordymask,:]
       var=var[(coordy[0]==coordy[1] and 1) or 0:(coordy[-1]==coordy[-2] and -1) or None,:]
       latmin=np.max([-180.,coordy[0]-(coordy[1]-coordy[0])/2.])
@@ -531,7 +531,7 @@ class ncdisp:
       coordxmask=(coordx>=-180.)*(coordx<=180.)
       coordx=coordx[coordxmask]
       coordx=coordx[(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
-      var=np.hstack((var,var,var))
+      var=np.ma.hstack((var,var,var))
       var=var[:,coordxmask]
       var=var[:,(coordx[0]==coordx[1] and 1) or 0:(coordx[-1]==coordx[-2] and -1) or None]
       lonmin=np.max([-180.,coordx[0]-(coordx[1]-coordx[0])/2.])
