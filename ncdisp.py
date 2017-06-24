@@ -194,7 +194,8 @@ class ncdisp:
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[1,1,1,1])
         else:
           m.drawparallels(np.arange(-80.,81.,40.),labels=[1,0,0,0])
-          m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,0,1])
+          if p not in ['moll','hammer']:
+            m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,0,1])
       else:
         m=ax
 
@@ -599,7 +600,8 @@ class ncdisp:
           m.drawmeridians(np.arange(-180.,181.,60.),labels=[1,1,1,1])
         else:
           m.drawparallels(np.arange(-80.,81.,40.),labels=[1,0,0,0])
-          m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,1,0])
+          if p not in ['moll','hammer']:
+            m.drawmeridians(np.arange(-180.,181.,60.),labels=[0,0,1,0])
       else:
         m=ax
   
