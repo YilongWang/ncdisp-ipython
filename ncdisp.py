@@ -274,7 +274,7 @@ class ncdisp:
   def _defaultbmargs(lat_0=90,lon_0=0,boundinglat=1):
     pass
 
-  def _defaultmapargs(zorder=0):
+  def _defaultmapargs(zorder=1):
     pass
   
   def line(self,vs=[],loc=[],orientation='h',invertyaxis='n',legend='on',refs=[],plotargs=[],**kwargs):
