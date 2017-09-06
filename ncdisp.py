@@ -167,6 +167,8 @@ class ncdisp:
       if x2==None:x2=coordx[-1]
       px=np.searchsorted(crnrxx,[x1,x2])-1
 
+    px[0]=np.max([0,px[0]])
+    py[0]=np.max([0,py[0]])      
     mapvar=var[py[0]:py[-1]+1,px[0]:px[-1]+1]
     if intp=='n':
       mapboundy=[crnryy[py[0]],crnryy[py[-1]+1]]
@@ -578,6 +580,8 @@ class ncdisp:
       if x2==None:x2=coordx[-1]
       px=np.searchsorted(crnrxx,[x1,x2])-1
 
+    px[0]=np.max([0,px[0]])
+    py[0]=np.max([0,py[0]])
     v=v[py[0]:py[-1]+1,px[0]:px[-1]+1]
     u=u[py[0]:py[-1]+1,px[0]:px[-1]+1]
     mapboundy=[crnryy[py[0]],crnryy[py[-1]+1]]
