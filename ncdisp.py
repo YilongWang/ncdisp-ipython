@@ -10,7 +10,7 @@ from netCDF4 import Dataset
 
 class ncdisp:      
   def map(self,var,y1=None,y2=None,x1=None,x2=None,y='I',x='J',loc=[],\
-            m=None,p='cyl',edg='n',face='y',intp='n',cbar='y',ref=None,**kwargs):
+            m=None,p='cyl',edge='n',face='y',intp='n',cbar='y',ref=None,**kwargs):
     """
     Display the geographic map.
   
