@@ -224,7 +224,7 @@ class ncdisp:
             im=m.contourf(dispx,dispy,mapvar,levs,colors=mapkwargs['colorsf'],**mapkwargs)
           else:      
             im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargs)
-        if edg=='y':
+        if edge=='y':
           if 'colorsl' in mapkwargs and 'cmap' in mapkwargs:
             im=m.contour(dispx,dispy,mapvar,colors=mapkwargs['colorsl'],**mapkwargs)
           else:
@@ -251,7 +251,7 @@ class ncdisp:
             im=m.contourf(dispx,dispy,mapvar,levs,colors=mapkwargs['colorsf'],**mapkwargs)
           else:      
             im=m.contourf(dispx,dispy,mapvar,levs,**mapkwargs)
-        if edg=='y':
+        if edge=='y':
           if 'colorsl' in mapkwargs and 'cmap' in mapkwargs:
             im=m.contour(dispx,dispy,mapvar,colors=mapkwargs['colorsl'],**mapkwargs)
           else:
